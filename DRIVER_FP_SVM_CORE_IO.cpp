@@ -2,6 +2,7 @@
 
 /************************************************************************************
     Implementation of GT-511C3 Fingerprint Sensor Core I/O Hardware Routines
+    Designed specially for SVM Project
     Author:             Ashis Kumar Das
     Email:              akd.bracu@gmail.com
     GitHub:             https://github.com/AKD92
@@ -15,8 +16,9 @@
 #include "DRIVER_FP_SVM.h"
 
 extern "C" {
-    #include "string.h"
+    #include <string.h>
 }
+
 
 
 
@@ -92,7 +94,6 @@ void fpsvm_writePacketToSerial(HardwareSerial *serial, BYTE *buffer) {
     
     serial->write(buffer, 12);
     serial->flush();
-    
     return;
 }
 
@@ -117,12 +118,11 @@ void fpsvm_readPacketFromSerial(BYTE *buffer, HardwareSerial *serial) {
         }
         *(buffer + i) = (BYTE) serial->read();
     }
-    
     return;
 }
 
 
-void fpsvm_writeTemplateToSerial(HardwareSerial *serial, BYTE *bufTemplate) {
+void fpsvm_writeTemplateToSerial(HardwareSerial *serial, BYTE *bufStorage) {
     
     WORD i;
     WORD checksum;
@@ -139,20 +139,18 @@ void fpsvm_writeTemplateToSerial(HardwareSerial *serial, BYTE *bufTemplate) {
     serial->write(0x00);
     
     for (i = 0; i < 498; i++) {
-        serial->write(*(bufTemplate + i));              /* Write the value of (i - 1)th index of the buffer */
-        checksum += *(bufTemplate + i);                 /* Continue calculating checksum value */
+        serial->write(*(bufStorage + i));              /* Write the value of (i - 1)th index of the buffer */
+        checksum += *(bufStorage + i);                 /* Continue calculating checksum value */
     }
     
     serial->write(checksum & 0x00FF);
     serial->write((checksum & 0xFF00) >> 8);
-    
     serial->flush();
-    
     return;
 }
 
 
-void fpsvm_readTemplateFromSerial(BYTE *bufTemplate, HardwareSerial *serial) {
+void fpsvm_readTemplateFromSerial(BYTE *bufStorage, HardwareSerial *serial) {
     
     WORD i;
     BYTE firstbyte;
@@ -176,7 +174,7 @@ void fpsvm_readTemplateFromSerial(BYTE *bufTemplate, HardwareSerial *serial) {
         while (serial->available() == 0) {
             delay(5);
         }
-        *(bufTemplate + i) = (BYTE) serial->read();
+        *(bufStorage + i) = (BYTE) serial->read();
     }
     
     while (serial->available() < 2) {                       // Reading 2 byte checksum
@@ -184,8 +182,8 @@ void fpsvm_readTemplateFromSerial(BYTE *bufTemplate, HardwareSerial *serial) {
     }
     serial->read();
     serial->read();
-    
     return;
 }
+
 
 

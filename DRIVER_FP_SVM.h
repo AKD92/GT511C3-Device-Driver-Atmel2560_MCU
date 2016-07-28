@@ -2,7 +2,7 @@
 
 /************************************************************************************
     Device Driver Interface for GT-511C3 Fingerprint Sensor
-    Specialized for SVM Project
+    Designed specially for SVM Project
     Author:             Ashis Kumar Das
     Email:              akd.bracu@gmail.com
     GitHub:             https://github.com/AKD92
@@ -28,9 +28,9 @@
 
 
 
-typedef uint8_t BYTE;                       /* A BYTE is 8bit Unsigned Integer */
-typedef uint16_t WORD;                      /* A WORD is 16bit Unsigned Integer */
-typedef uint32_t DWORD;                     /* A DWORD (Double Word) is 32bit Unsigned Integer */
+typedef uint8_t BYTE;                       /* A BYTE is 8-bit Unsigned Integer */
+typedef uint16_t WORD;                      /* A WORD is 16-bit Unsigned Integer */
+typedef uint32_t DWORD;                     /* A DWORD (Double Word) is 32-bit Unsigned Integer */
 
 
 
@@ -152,27 +152,27 @@ void fpsvm_writePacketToSerial(HardwareSerial *serial, BYTE *buffer);
 void fpsvm_readPacketFromSerial(BYTE *buffer, HardwareSerial *serial);
 
 
-void fpsvm_writeTemplateToSerial(HardwareSerial *serial, BYTE *bufTemplate);
+void fpsvm_writeTemplateToSerial(HardwareSerial *serial, BYTE *bufStorage);
 
-void fpsvm_readTemplateFromSerial(BYTE *bufTemplate, HardwareSerial *serial);
-
-
+void fpsvm_readTemplateFromSerial(BYTE *bufStorage, HardwareSerial *serial);
 
 
 
-void fpsvm_enroll(void);
 
-void fpsvm_getenrolledtemplate(void);
 
-void fpsvm_deleteall(void);
+void fpsvm_Enroll(void);
 
-void fpsvm_scanvoter(void);
+void fpsvm_GetEnrolledTemplate(void);
 
-void fpsvm_readTemplateFromHost(void);
+void fpsvm_DeleteDatabase(void);
 
-void fpsvm_settemplate(void);
+void fpsvm_ScanLiveTemplate(void);
 
-void fpsvm_identify(void);
+void fpsvm_ReadTemplateFromHost(void);
+
+void fpsvm_SetTemplate(void);
+
+void fpsvm_IdentifyTemplate(void);
 
 
 
