@@ -1,4 +1,4 @@
-# GT511C3 Fingerprint Device Driver For SVM Project
+# GT511C3 Advanced Fingerprint Device Driver
 
 Device Driver implementation of the Fingerprint module GT 511C3, specially designed for SVM Project. Target MCU is Atmel MEGA 2560.
 
